@@ -1,11 +1,11 @@
-import { objectTypes } from "declarative-canvas";
+import { objectTypes } from 'declarative-canvas';
 
 const createEye = ({ x, y }) => ({
   type: objectTypes.CIRCLE,
   x,
   y,
   radius: 2,
-  contextProps: { fillStyle: "black" },
+  contextProps: { fillStyle: 'black' },
 });
 
 const createCreature = ({ x, y, showVisibilityRange = false }) => {
@@ -26,25 +26,21 @@ const createCreature = ({ x, y, showVisibilityRange = false }) => {
     radius: 8,
   };
   const rangeCircle = {
-    type: "ARC",
+    type: 'ARC',
     x: 0,
     y: 0,
     radius: 100,
     startAngle: -Math.PI / 5 - Math.PI / 2,
     endAngle: Math.PI / 5 - Math.PI / 2,
-    contextProps: { fillStyle: "rgba(255, 255, 255, 0.2)" },
+    contextProps: { fillStyle: 'rgba(255, 255, 255, 0.2)' },
   };
 
   return {
     type: objectTypes.TRANSFORM,
     dx: x,
     dy: y,
-    contextProps: { fillStyle: "white", strokeStyle: "white" },
-    children: [
-      ...headElements,
-      body,
-      ...(showVisibilityRange ? [rangeCircle] : []),
-    ],
+    contextProps: { fillStyle: 'white', strokeStyle: 'white' },
+    children: [...headElements, body, ...(showVisibilityRange ? [rangeCircle] : [])],
   };
 };
 
