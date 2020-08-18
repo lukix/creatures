@@ -3632,6 +3632,11 @@ decamelize@^1.1.2, decamelize@^1.2.0:
   resolved "https://registry.yarnpkg.com/decamelize/-/decamelize-1.2.0.tgz#f6534d15148269b20352e7bee26f501f9a191290"
   integrity sha1-9lNNFRSCabIDUue+4m9QH5oZEpA=
 
+declarative-canvas@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/declarative-canvas/-/declarative-canvas-0.4.0.tgz#51f05b5dd126564c9348cf3ec9cc957129024c1e"
+  integrity sha512-j04COc33/g1CcBv4ZL08ydbgxaEQumgBnFU8Ts9JdjiskYYhYOuvtguN60xLDzwwciZw6ZcJmJ9PjwfIUzc8Hw==
+
 decode-uri-component@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/decode-uri-component/-/decode-uri-component-0.2.0.tgz#eb3913333458775cb84cd1a1fae062106bb87545"
