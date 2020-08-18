@@ -13,6 +13,9 @@ const mapStateToRendererObjects = (state) => {
           x: object.x,
           y: object.y,
           heading: object.heading,
+          eyeImage: object.eyeImage,
+          visibilityAngle: object.visibilityAngle,
+          visibilityRange: object.visibilityRange,
           showVisibilityRange: true,
         });
       default:

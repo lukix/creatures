@@ -24,6 +24,7 @@ const useSimulation = () => {
       stateReducer,
       mapStateToRendererObjects,
       render: (objectsToRender) => draw({ context, objects: objectsToRender }),
+      maxDt: 100,
     });
 
     return () => {

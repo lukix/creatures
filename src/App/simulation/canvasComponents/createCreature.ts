@@ -8,7 +8,15 @@ const createEye = ({ x, y }) => ({
   contextProps: { fillStyle: 'black' },
 });
 
-const createCreature = ({ x, y, heading, showVisibilityRange = false }) => {
+const createCreature = ({
+  x,
+  y,
+  heading,
+  eyeImage,
+  visibilityAngle,
+  visibilityRange,
+  showVisibilityRange = false,
+}) => {
   const headElements = [
     {
       type: objectTypes.CIRCLE,
@@ -25,15 +33,20 @@ const createCreature = ({ x, y, heading, showVisibilityRange = false }) => {
     y: 12,
     radius: 8,
   };
-  const rangeCircle = {
+
+  const visibilityResolution = eyeImage.length;
+  const rightAngle = Math.PI / 2;
+  const rangeCircles = new Array(visibilityResolution).fill(null).map((_, index) => ({
     type: 'ARC',
     x: 0,
     y: 0,
-    radius: 100,
-    startAngle: -Math.PI / 5 - Math.PI / 2,
-    endAngle: Math.PI / 5 - Math.PI / 2,
-    contextProps: { fillStyle: 'rgba(255, 255, 255, 0.2)' },
-  };
+    radius: visibilityRange,
+    startAngle:
+      -visibilityAngle / 2 - rightAngle + (index * visibilityAngle) / visibilityResolution,
+    endAngle:
+      -visibilityAngle / 2 - rightAngle + ((index + 1) * visibilityAngle) / visibilityResolution,
+    contextProps: { fillStyle: `rgba(255, 255, 255, ${index % 2 ? 0.18 : 0.22})` },
+  }));
 
   return {
     type: objectTypes.TRANSFORM,
@@ -41,7 +54,7 @@ const createCreature = ({ x, y, heading, showVisibilityRange = false }) => {
     dy: y,
     rotation: heading,
     contextProps: { fillStyle: 'white', strokeStyle: 'white' },
-    children: [...headElements, body, ...(showVisibilityRange ? [rangeCircle] : [])],
+    children: [...headElements, body, ...(showVisibilityRange ? rangeCircles : [])],
   };
 };
 
