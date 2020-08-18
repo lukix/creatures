@@ -9,7 +9,12 @@ const mapStateToRendererObjects = (state) => {
       case 'FOOD':
         return createFood({ x: object.x, y: object.y });
       case 'CREATURE':
-        return createCreature({ x: object.x, y: object.y, showVisibilityRange: true });
+        return createCreature({
+          x: object.x,
+          y: object.y,
+          heading: object.heading,
+          showVisibilityRange: true,
+        });
       default:
         throw new Error('Unexpected simulation object type');
     }

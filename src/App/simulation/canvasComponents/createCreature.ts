@@ -8,7 +8,7 @@ const createEye = ({ x, y }) => ({
   contextProps: { fillStyle: 'black' },
 });
 
-const createCreature = ({ x, y, showVisibilityRange = false }) => {
+const createCreature = ({ x, y, heading, showVisibilityRange = false }) => {
   const headElements = [
     {
       type: objectTypes.CIRCLE,
@@ -39,6 +39,7 @@ const createCreature = ({ x, y, showVisibilityRange = false }) => {
     type: objectTypes.TRANSFORM,
     dx: x,
     dy: y,
+    rotation: heading,
     contextProps: { fillStyle: 'white', strokeStyle: 'white' },
     children: [...headElements, body, ...(showVisibilityRange ? [rangeCircle] : [])],
   };

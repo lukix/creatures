@@ -5,7 +5,7 @@ const getInitialState = () => {
     y: Math.random() * 600,
   }));
 
-  const creature = { type: 'CREATURE', x: 500, y: 300 };
+  const creature = { type: 'CREATURE', x: 500, y: 300, heading: 0 };
 
   return {
     objects: [...foodObjects, creature],
