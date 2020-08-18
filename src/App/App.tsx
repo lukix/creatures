@@ -1,8 +1,14 @@
 import React, { useRef, useEffect } from "react";
-import { createDrawFunction, objectTypes } from "declarative-canvas";
+import { createDrawFunction } from "declarative-canvas";
 
-import createCreature from "./createCreature";
+import createCreature from "./canvasComponents/createCreature";
+import createFood from "./canvasComponents/createFood";
+import drawArc from "./drawArc";
 import styles from "./App.module.scss";
+
+const customDrawHandlers = {
+  ARC: drawArc,
+};
 
 const App = () => {
   const canvasRef = useRef(null);
@@ -11,12 +17,17 @@ const App = () => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
 
+    const foodObjects = new Array(200).fill(1).map(() => ({
+      x: Math.random() * 1000,
+      y: Math.random() * 600,
+    }));
+
     const objectsToRender = [
-      createCreature({ x: 500, y: 300 }),
-      createCreature({ x: 340, y: 270 }),
+      ...foodObjects.map(({ x, y }) => createFood({ x, y })),
+      createCreature({ x: 500, y: 300, showVisibilityRange: true }),
     ];
 
-    const draw = createDrawFunction();
+    const draw = createDrawFunction(customDrawHandlers);
 
     draw({ context, objects: objectsToRender });
   }, []);
