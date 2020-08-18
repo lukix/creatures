@@ -45,7 +45,9 @@ const createCreature = ({
       -visibilityAngle / 2 - rightAngle + (index * visibilityAngle) / visibilityResolution,
     endAngle:
       -visibilityAngle / 2 - rightAngle + ((index + 1) * visibilityAngle) / visibilityResolution,
-    contextProps: { fillStyle: `rgba(255, 255, 255, ${index % 2 ? 0.18 : 0.22})` },
+    contextProps: {
+      fillStyle: `rgba(255, 255, 255, ${eyeImage[index] ? 0.3 : index % 2 ? 0.2 : 0.2})`,
+    },
   }));
 
   return {
