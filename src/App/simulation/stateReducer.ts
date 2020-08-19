@@ -1,13 +1,6 @@
 import { visibilityAngle, visibilityRange, visibilityResolution } from './constants';
 import { getBrainOutput } from './brain';
 
-const mapObjectsOfType = (type, mappingFn) => (object) => {
-  if (object.type !== type) {
-    return object;
-  }
-  return mappingFn(object);
-};
-
 const normalizeAngle = (angle) => {
   if (angle > Math.PI) {
     return angle - 2 * Math.PI;
@@ -87,13 +80,25 @@ const updateCreature = (creatureObject, dt, objects) => {
 };
 
 const stateReducer = (state, dt) => {
+  const creatureObject = state.objects.find(({ type }) => type === 'CREATURE');
+  const objectsWithoutEatenFood = state.objects.filter((object) => {
+    if (object.type === 'FOOD') {
+      return Math.hypot(creatureObject.x - object.x, creatureObject.y - object.y) > 8;
+    }
+    return true;
+  });
+  const eatenFoodsNumber = state.objects.length - objectsWithoutEatenFood.length;
   return {
     ...state,
-    objects: state.objects.map(
-      mapObjectsOfType('CREATURE', (object) => {
-        return updateCreature(object, dt, state.objects);
-      })
-    ),
+    objects: objectsWithoutEatenFood.map((object) => {
+      if (object.type === 'CREATURE') {
+        return {
+          ...updateCreature(object, dt, state.objects),
+          tummyContent: object.tummyContent + eatenFoodsNumber,
+        };
+      }
+      return object;
+    }),
   };
 };
 

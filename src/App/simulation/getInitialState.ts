@@ -23,6 +23,7 @@ const getInitialState = () => {
         { size: 1, activateFunction: activationFunctions.SIGMOID },
       ],
     },
+    tummyContent: 0,
   };
 
   return {
