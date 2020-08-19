@@ -28,7 +28,6 @@ export const getBrainOutput = (brain, inputs) => {
     const inputsSum = zip(weights, [...inputs, BIAS_NEURON_VALUE])
       .map(([weight, value]) => weight * value)
       .reduce((acc, curr) => acc + curr, 0);
-    console.log(inputsSum);
     return activate(layersStructure[1].activateFunction, inputsSum);
   });
 

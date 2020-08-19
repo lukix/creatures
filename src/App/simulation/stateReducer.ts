@@ -1,4 +1,5 @@
 import { visibilityAngle, visibilityRange, visibilityResolution } from './constants';
+import { getBrainOutput } from './brain';
 
 const mapObjectsOfType = (type, mappingFn) => (object) => {
   if (object.type !== type) {
@@ -67,7 +68,10 @@ const updateCreature = (creatureObject, dt, objects) => {
   const eyeImage = getEyeImage(creatureObject, objects);
 
   const velocity = 30;
-  const angularVelocity = 0.6;
+  const [angularVelocity] = getBrainOutput(
+    creatureObject.brain,
+    eyeImage.map((v) => (v ? 1 : 0))
+  );
 
   const ds = velocity * dt;
   const dx = ds * Math.sin(creatureObject.heading);

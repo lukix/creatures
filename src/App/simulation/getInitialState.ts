@@ -16,7 +16,7 @@ const getInitialState = () => {
     visibilityAngle,
     visibilityRange,
     brain: {
-      weights: new Array(4 * 3 + 4 * 1).fill(null).map(() => Math.random()),
+      weights: new Array(4 * 3 + 4 * 1).fill(null).map(() => 2 * Math.random() - 1),
       layersStructure: [
         { size: visibilityResolution, activateFunction: activationFunctions.SIGMOID },
         { size: 3, activateFunction: activationFunctions.SIGMOID },
