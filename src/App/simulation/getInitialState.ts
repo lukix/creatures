@@ -1,8 +1,10 @@
 import { visibilityAngle, visibilityRange, visibilityResolution } from './constants';
 import { activationFunctions } from './brain';
 
-const getInitialState = () => {
-  const foodObjects = new Array(200).fill(null).map(() => ({
+const getInitialState = (
+  weights = new Array(4 * 5 + 6 * 1).fill(null).map(() => 2 * Math.random() - 1)
+) => {
+  const foodObjects = new Array(100).fill(null).map(() => ({
     type: 'FOOD',
     x: Math.random() * 1000,
     y: Math.random() * 600,
@@ -16,10 +18,10 @@ const getInitialState = () => {
     visibilityAngle,
     visibilityRange,
     brain: {
-      weights: new Array(4 * 3 + 4 * 1).fill(null).map(() => 2 * Math.random() - 1),
+      weights,
       layersStructure: [
         { size: visibilityResolution, activateFunction: activationFunctions.SIGMOID },
-        { size: 3, activateFunction: activationFunctions.SIGMOID },
+        { size: 5, activateFunction: activationFunctions.SIGMOID },
         { size: 1, activateFunction: activationFunctions.SIGMOID },
       ],
     },

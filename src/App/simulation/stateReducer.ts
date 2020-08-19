@@ -49,22 +49,20 @@ const getEyeImage = (creatureObject, objects) => {
     };
   });
   return new Array(visibilityResolution).fill(null).map((_, index) => {
-    return objectsAngles.find(
+    return objectsAngles.filter(
       ({ angle }) =>
         angle > -visibilityAngle / 2 + (index * visibilityAngle) / visibilityResolution &&
         angle < -visibilityAngle / 2 + ((index + 1) * visibilityAngle) / visibilityResolution
-    );
+    ).length;
   });
 };
 
 const updateCreature = (creatureObject, dt, objects) => {
   const eyeImage = getEyeImage(creatureObject, objects);
 
-  const velocity = 30;
-  const [angularVelocity] = getBrainOutput(
-    creatureObject.brain,
-    eyeImage.map((v) => (v ? 1 : 0))
-  );
+  const velocity = 60;
+  const [output] = getBrainOutput(creatureObject.brain, eyeImage);
+  const angularVelocity = 2 * output;
 
   const ds = velocity * dt;
   const dx = ds * Math.sin(creatureObject.heading);

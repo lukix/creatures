@@ -6,6 +6,7 @@ import { animationLoop } from './animationLoop';
 import getInitialState from './getInitialState';
 import stateReducer from './stateReducer';
 import mapStateToRendererObjects from './mapStateToRendererObjects';
+import runEvolution from './evolution';
 
 const customDrawHandlers = {
   ARC: drawArc,
@@ -19,16 +20,27 @@ const useSimulation = () => {
     const context = canvas.getContext('2d');
     const draw = createDrawFunction(customDrawHandlers);
 
-    const { setPause } = animationLoop({
-      initialState: getInitialState(),
-      stateReducer,
-      mapStateToRendererObjects,
-      render: (objectsToRender) => draw({ context, objects: objectsToRender }),
-      maxDt: 100,
-    });
+    let pause = () => {};
+    const run = async () => {
+      const { getHighestFitnessIndividual } = await runEvolution();
+
+      console.log(getHighestFitnessIndividual());
+      const weights = getHighestFitnessIndividual().individual;
+
+      const { setPause } = animationLoop({
+        initialState: getInitialState(weights),
+        stateReducer,
+        mapStateToRendererObjects,
+        render: (objectsToRender) => draw({ context, objects: objectsToRender }),
+        maxDt: 100,
+      });
+      pause = () => setPause(true);
+    };
+
+    run();
 
     return () => {
-      setPause(true);
+      pause();
     };
   }, []);
 
