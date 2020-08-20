@@ -1,4 +1,4 @@
-.canvasWrapper {
+.app {
   text-align: center;
   display: flex;
   justify-content: center;
@@ -7,9 +7,22 @@
   height: 100vh;
 }
 
-.canvas {
+.mainContainer {
   width: 1000px;
   height: 600px;
   background: #22222a;
   box-shadow: inset 0px 0px 20px 5px rgba(46,58,75,1);
+}
+
+.settingsContainer {
+  text-align: center;
+  padding: 40px 150px;
+}
+
+.settingsInnerBox {
+  margin-top: 100px;
+}
+
+.settingSection {
+  margin-bottom: 30px;
 }

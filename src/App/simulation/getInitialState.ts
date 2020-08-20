@@ -1,10 +1,8 @@
 import { visibilityAngle, visibilityRange, visibilityResolution } from './constants';
 import { activationFunctions } from './brain';
 
-const getInitialState = (
-  weights = new Array(4 * 5 + 6 * 1).fill(null).map(() => 2 * Math.random() - 1)
-) => {
-  const foodObjects = new Array(150).fill(null).map(() => ({
+const getInitialState = ({ weights, foodAvailability }) => {
+  const foodObjects = new Array(foodAvailability).fill(null).map(() => ({
     type: 'FOOD',
     x: Math.random() * 1000,
     y: Math.random() * 600,

@@ -16,8 +16,8 @@ const updateStateByMultipleSteps = (initialState, iterations, dt) => {
   }, initialState);
 };
 
-const evaluateIndividual = async (weights) => {
-  const initialState = getInitialState(weights);
+const evaluateIndividual = async (weights, foodAvailability) => {
+  const initialState = getInitialState({ weights, foodAvailability });
   const simulationTime = 90; // seconds
   const dt = 6 / 60;
   const timeSteps = chunk(new Array(simulationTime / dt).fill(null), 100);
@@ -29,10 +29,6 @@ const evaluateIndividual = async (weights) => {
   return finalState.objects.find(({ type }) => type === 'CREATURE').tummyContent;
 };
 
-const fitnessFunction = (weights) => {
-  return evaluateIndividual(weights);
-};
-
 const generateIndividual = () => {
   const weights = new Array(4 * 5 + 6 * 1).fill(null).map(() => 10 * (Math.random() - 0.5));
   return weights;
@@ -40,7 +36,7 @@ const generateIndividual = () => {
 
 const POPULATION_SIZE = 20;
 
-const runEvolution = () => {
+const runEvolution = ({ iterations, foodAvailability, iterationCallback }) => {
   return Genemo.run({
     generateInitialPopulation: Genemo.generateInitialPopulation({
       generateIndividual,
@@ -59,16 +55,21 @@ const runEvolution = () => {
       mutationProbability: 0.1,
     }),
     evaluatePopulation: (individuals) =>
-      Promise.all(individuals.map((individual) => fitnessFunction(individual))),
-    stopCondition: Genemo.stopCondition({ maxIterations: 10 }),
-    iterationCallback: Genemo.logIterationData({
-      include: {
-        iteration: { show: true },
-        avgFitness: { show: true },
-        maxFitness: { show: true },
-        logsKeys: [{ key: 'lastIteration' }, { key: 'fitness' }],
-      },
-    }),
+      Promise.all(
+        individuals.map((individual) => evaluateIndividual(individual, foodAvailability))
+      ),
+    stopCondition: Genemo.stopCondition({ maxIterations: iterations }),
+    iterationCallback: (...args) => {
+      Genemo.logIterationData({
+        include: {
+          iteration: { show: true },
+          avgFitness: { show: true },
+          maxFitness: { show: true },
+          logsKeys: [{ key: 'lastIteration' }, { key: 'fitness' }],
+        },
+      })(...args);
+      iterationCallback(args[0].iteration);
+    },
   });
 };
 

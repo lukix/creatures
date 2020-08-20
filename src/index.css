@@ -2,9 +2,5 @@ body {
   margin: 0;
   background: #2e3a4b;
   color: white;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  font-family: Arial;
 }

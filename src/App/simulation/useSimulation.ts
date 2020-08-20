@@ -6,13 +6,12 @@ import { animationLoop } from './animationLoop';
 import getInitialState from './getInitialState';
 import stateReducer from './stateReducer';
 import mapStateToRendererObjects from './mapStateToRendererObjects';
-import runEvolution from './evolution';
 
 const customDrawHandlers = {
   ARC: drawArc,
 };
 
-const useSimulation = () => {
+const useSimulation = ({ weights, iterations, foodAvailability }) => {
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -22,13 +21,8 @@ const useSimulation = () => {
 
     let pause = () => {};
     const run = async () => {
-      const { getHighestFitnessIndividual } = await runEvolution();
-
-      console.log(getHighestFitnessIndividual());
-      const weights = getHighestFitnessIndividual().individual;
-
       const { setPause } = animationLoop({
-        initialState: getInitialState(weights),
+        initialState: getInitialState({ weights, foodAvailability }),
         stateReducer,
         mapStateToRendererObjects,
         render: (objectsToRender) => draw({ context, objects: objectsToRender }),
