@@ -1,28 +1,40 @@
 import Genemo from 'genemo';
+import zip from 'lodash.zip';
+import chunk from 'lodash.chunk';
 
 import getInitialState from './getInitialState';
 import stateReducer from './stateReducer';
 
-const evaluateIndividual = (weights) => {
+const executeAsynchronously = (fn) =>
+  new Promise((res) => {
+    setTimeout(() => res(fn()), 1);
+  });
+
+const updateStateByMultipleSteps = (initialState, iterations, dt) => {
+  return new Array(iterations).fill(null).reduce((prevState) => {
+    return stateReducer(prevState, dt);
+  }, initialState);
+};
+
+const evaluateIndividual = async (weights) => {
   const initialState = getInitialState(weights);
   const simulationTime = 90; // seconds
   const dt = 6 / 60;
-  const timeSteps = new Array((simulationTime * 1) / dt).fill(null);
-  const finalState = timeSteps.reduce((state) => {
-    return stateReducer(state, dt);
-  }, initialState);
+  const timeSteps = chunk(new Array(simulationTime / dt).fill(null), 100);
+  const finalState = await timeSteps.reduce((prevState, { length: timeStepsNumber }) => {
+    return prevState.then((s) =>
+      executeAsynchronously(() => updateStateByMultipleSteps(s, timeStepsNumber, dt))
+    );
+  }, Promise.resolve(initialState));
   return finalState.objects.find(({ type }) => type === 'CREATURE').tummyContent;
 };
 
 const fitnessFunction = (weights) => {
-  const attempt1 = evaluateIndividual(weights);
-  const attempt2 = evaluateIndividual(weights);
-  const attempt3 = evaluateIndividual(weights);
-  return (attempt1 + attempt2 + attempt3) / 3;
+  return evaluateIndividual(weights);
 };
 
 const generateIndividual = () => {
-  const weights = new Array(4 * 5 + 6 * 1).fill(null).map(() => 2 * Math.random() - 1);
+  const weights = new Array(4 * 5 + 6 * 1).fill(null).map(() => 10 * (Math.random() - 0.5));
   return weights;
 };
 
@@ -37,15 +49,18 @@ const runEvolution = () => {
     selection: Genemo.selection.roulette({ minimizeFitness: false }),
     succession: Genemo.elitism({ keepFactor: 1 / POPULATION_SIZE, minimizeFitness: false }),
     reproduce: Genemo.reproduce({
-      // crossover: Genemo.crossover.kPoint(2),
-      crossover: Genemo.crossover.uniform(),
+      crossover: ([parentA, parentB]) => {
+        return [
+          zip(parentA, parentB).map(([a, b]) => 0.6 * a + 0.4 * b),
+          zip(parentA, parentB).map(([a, b]) => 0.4 * a + 0.6 * b),
+        ];
+      },
       mutate: Genemo.mutation.transformRandomGene((weight) => weight + Math.random() - 0.5),
-      mutationProbability: 0.03,
+      mutationProbability: 0.1,
     }),
-    evaluatePopulation: Genemo.evaluatePopulation({
-      fitnessFunction,
-    }),
-    stopCondition: Genemo.stopCondition({ maxIterations: 100 }),
+    evaluatePopulation: (individuals) =>
+      Promise.all(individuals.map((individual) => fitnessFunction(individual))),
+    stopCondition: Genemo.stopCondition({ maxIterations: 10 }),
     iterationCallback: Genemo.logIterationData({
       include: {
         iteration: { show: true },
