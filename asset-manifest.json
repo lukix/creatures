@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "creatures/static/css/main.0885d9c6.chunk.css",
-    "main.js": "creatures/static/js/main.ec333906.chunk.js",
-    "main.js.map": "creatures/static/js/main.ec333906.chunk.js.map",
-    "runtime-main.js": "creatures/static/js/runtime-main.49923672.js",
-    "runtime-main.js.map": "creatures/static/js/runtime-main.49923672.js.map",
-    "static/js/2.1eec9f68.chunk.js": "creatures/static/js/2.1eec9f68.chunk.js",
-    "static/js/2.1eec9f68.chunk.js.map": "creatures/static/js/2.1eec9f68.chunk.js.map",
-    "index.html": "creatures/index.html",
-    "precache-manifest.570ccd61ce5a0ce34afaf22223da50d6.js": "creatures/precache-manifest.570ccd61ce5a0ce34afaf22223da50d6.js",
-    "service-worker.js": "creatures/service-worker.js",
-    "static/css/main.0885d9c6.chunk.css.map": "creatures/static/css/main.0885d9c6.chunk.css.map",
-    "static/js/2.1eec9f68.chunk.js.LICENSE.txt": "creatures/static/js/2.1eec9f68.chunk.js.LICENSE.txt"
+    "main.css": "https://lukix.github.io/creatures/static/css/main.0885d9c6.chunk.css",
+    "main.js": "https://lukix.github.io/creatures/static/js/main.c5d9934f.chunk.js",
+    "main.js.map": "https://lukix.github.io/creatures/static/js/main.c5d9934f.chunk.js.map",
+    "runtime-main.js": "https://lukix.github.io/creatures/static/js/runtime-main.f5854b8c.js",
+    "runtime-main.js.map": "https://lukix.github.io/creatures/static/js/runtime-main.f5854b8c.js.map",
+    "static/js/2.1eec9f68.chunk.js": "https://lukix.github.io/creatures/static/js/2.1eec9f68.chunk.js",
+    "static/js/2.1eec9f68.chunk.js.map": "https://lukix.github.io/creatures/static/js/2.1eec9f68.chunk.js.map",
+    "index.html": "https://lukix.github.io/creatures/index.html",
+    "precache-manifest.1e738d184daa58eaab080f0527bda301.js": "https://lukix.github.io/creatures/precache-manifest.1e738d184daa58eaab080f0527bda301.js",
+    "service-worker.js": "https://lukix.github.io/creatures/service-worker.js",
+    "static/css/main.0885d9c6.chunk.css.map": "https://lukix.github.io/creatures/static/css/main.0885d9c6.chunk.css.map",
+    "static/js/2.1eec9f68.chunk.js.LICENSE.txt": "https://lukix.github.io/creatures/static/js/2.1eec9f68.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.49923672.js",
+    "static/js/runtime-main.f5854b8c.js",
     "static/js/2.1eec9f68.chunk.js",
     "static/css/main.0885d9c6.chunk.css",
-    "static/js/main.ec333906.chunk.js"
+    "static/js/main.c5d9934f.chunk.js"
   ]
 }
