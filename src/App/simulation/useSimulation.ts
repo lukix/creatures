@@ -11,7 +11,7 @@ const customDrawHandlers = {
   ARC: drawArc,
 };
 
-const useSimulation = ({ weights, iterations, foodAvailability }) => {
+const useSimulation = ({ weights, foodAvailability }) => {
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -36,7 +36,7 @@ const useSimulation = ({ weights, iterations, foodAvailability }) => {
     return () => {
       pause();
     };
-  }, []);
+  }, [foodAvailability, weights]);
 
   return { canvasRef };
 };

@@ -42,13 +42,7 @@ const App = () => {
                 onFinish={onEvolutionFinish}
               />
             ),
-            2: (
-              <Canvas
-                iterations={iterations}
-                foodAvailability={foodAvailability}
-                weights={weights}
-              />
-            ),
+            2: <Canvas foodAvailability={foodAvailability} weights={weights} />,
           }[step]
         }
       </div>
